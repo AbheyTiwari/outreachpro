@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OutreachPro Extension</title>
+<link rel="stylesheet" href="popup.css"/>
+</head>
+<body>
+<div class="container">
+<!-- Header -->
+<header class="header">
+<div class="header-left">
+<div class="logo-icon">
+<span class="icon">✉️</span>
+</div>
+<h1 class="title">OutreachPro</h1>
+</div>
+<!-- Google Sync Indicator -->
+<div id="syncIndicator" class="sync-indicator">
+<span class="sync-dot-wrapper">
+<span class="sync-dot-ping"></span>
+<span class="sync-dot"></span>
+</span>
+<span class="sync-text">SYNC</span>
+</div>
+</header>
+
+<!-- Main Content -->
+<main class="main-content">
+<!-- Template Editor -->
+<div class="editor-card">
+<!-- Subject Line -->
+<div class="subject-section">
+<label class="label">SUBJECT</label>
+<input 
+  id="subjectInput" 
+  class="subject-input" 
+  placeholder="Quick question regarding..." 
+  type="text" 
+  value="Partnership Opportunity: Student Founders"
+/>
+</div>
+
+<!-- Variable Toolbar -->
+<div class="variable-toolbar">
+<span class="toolbar-label">Insert:</span>
+<button data-variable="{First Name}" class="variable-btn">
+{First Name}
+</button>
+<button data-variable="{Company}" class="variable-btn">
+{Company}
+</button>
+<button data-variable="{Role}" class="variable-btn">
+{Role}
+</button>
+</div>
+
+<!-- Body Text Area -->
+<div class="body-section">
+<textarea id="bodyTextarea" class="body-textarea" placeholder="Type your message here...">Hi {First Name},
+
+I recently came across {Company} and was impressed by your work in the student startup ecosystem.
+
+As a fellow builder, I wanted to reach out and see if you'd be open to a quick chat about how we could support your growth?
+
+Best,
+Alex</textarea>
+<!-- AI Button -->
+<button id="aiButton" class="ai-button" title="AI Refine">
+<span class="ai-icon">✨</span>
+</button>
+</div>
+</div>
+
+<!-- Preview Module -->
+<div class="preview-section">
+<div class="preview-header">
+<h3 class="preview-title">LIVE PREVIEW</h3>
+<span class="preview-recipient">Recipient: Jane Doe</span>
+</div>
+<div class="preview-card">
+<div class="preview-avatar-section">
+<div class="preview-avatar">
+<span class="avatar-text">JD</span>
+</div>
+<div class="preview-info">
+<span class="preview-name">Jane Doe</span>
+<span class="preview-company">Founder @ TechStart</span>
+</div>
+</div>
+<div class="preview-content">
+<div class="preview-line preview-line-short"></div>
+<div class="preview-line preview-line-full"></div>
+<div class="preview-line preview-line-medium"></div>
+</div>
+<div class="preview-footer">
+Email content rendered with variables
+</div>
+</div>
+</div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+<button id="settingsButton" class="settings-btn" title="Settings">
+<span class="icon">⚙️</span>
+</button>
+<div class="footer-right">
+<span id="statusText" class="status-text">Ready to send</span>
+<button id="sendButton" class="send-btn">
+<span>Send Outreach</span>
+<span class="icon">📨</span>
+</button>
+</div>
+</footer>
+</div>
+
+<script type="module" src="popup.js"></script>
+</body>
+</html>
