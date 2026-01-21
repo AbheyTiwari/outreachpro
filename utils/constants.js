@@ -41,12 +41,4 @@ export const TEMPLATE_VARS = [
 
 // Gemini API
 export const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY'; // Store in chrome.storage.local instead
-export const GEMINI_MODEL = 'gemini-pro';
-
-
-// Gmail API Limits
-export const GMAIL_LIMITS = {
-  MAX_PER_DAY: 500,
-  MAX_PER_MINUTE: 20,
-  DELAY_BETWEEN_SENDS: 3000 // 3 seconds
-};
+export const GEMINI_MODEL = 'gemini-2.5-flash';

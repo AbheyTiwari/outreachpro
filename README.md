@@ -1,249 +1,285 @@
-# OutreachPro Chrome Extension
+# OutreachPro
 
-A Chrome extension for sending personalized email outreach campaigns using Gmail API, Google Sheets, and Gemini AI.
+A Chrome extension for personalized email outreach at scale. Send customized emails to multiple recipients using Google Sheets as your contact database, with AI-powered template refinement.
 
-## 🚀 Quick Start
+## Overview
+
+OutreachPro streamlines cold email campaigns by combining Google Sheets contact management with Gmail's sending capabilities. The extension personalizes each email using template variables and includes AI assistance to improve your messaging.
+
+## Features
+
+### Core Functionality
+- **Batch Email Sending**: Send personalized emails to multiple recipients from a Google Sheet
+- **Template Variables**: Dynamic content insertion using `{First Name}`, `{Company}`, `{Role}`, and `{Email}`
+- **Live Preview**: See how your email will look with actual recipient data before sending
+- **AI Refinement**: Improve your email copy using Google's Gemini AI
+- **Progress Tracking**: Real-time updates as emails are sent
+- **Status Updates**: Automatically updates your Google Sheet with send status
+
+### Safety Features
+- **Rate Limiting**: Respects Gmail's 500 emails/day limit
+- **Send Delays**: 3-second intervals between emails to avoid triggering spam filters
+- **Input Validation**: Verifies email addresses and required fields before sending
+- **Daily Reset**: Send counter resets at midnight
+
+## Installation
 
 ### Prerequisites
+- Google Chrome browser
+- Google account with Gmail enabled
+- Google Cloud Console project
 
-1. **Google Cloud Project** with Gmail API and Sheets API enabled
-2. **Gemini API Key** (optional, for AI refinement)
-3. Chrome browser
+### Setup Steps
 
-### Setup Instructions
+1. **Clone the Repository**
+```bash
+   git clone https://github.com/yourusername/outreachpro.git
+   cd outreachpro
+```
 
-#### 1. Create Google Cloud Project
+2. **Configure Google Cloud**
+   
+   Create a new project in [Google Cloud Console](https://console.cloud.google.com/):
+   
+   - Navigate to "APIs & Services" → "Enabled APIs"
+   - Enable the following APIs:
+     - Gmail API
+     - Google Sheets API
+   
+   - Go to "OAuth consent screen"
+     - Choose "External" user type
+     - Fill in application name: "OutreachPro"
+     - Add your email as a test user
+   
+   - Go to "Credentials"
+     - Create "OAuth 2.0 Client ID"
+     - Application type: "Chrome Extension"
+     - Copy the Client ID
 
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project
-3. Enable the following APIs:
-   - Gmail API
-   - Google Sheets API
-4. Create OAuth 2.0 credentials:
-   - Application type: Chrome Extension
-   - Copy the Client ID
-
-#### 2. Configure the Extension
-
-Edit `manifest.json`:
-
+3. **Update Manifest**
+   
+   Open `Manifest.json` and replace the client_id:
 ```json
-"oauth2": {
-  "client_id": "YOUR_CLIENT_ID_HERE.apps.googleusercontent.com",
-  "scopes": [
-    "https://www.googleapis.com/auth/gmail.send",
-    "https://www.googleapis.com/auth/spreadsheets"
-  ]
-}
+   {
+     "oauth2": {
+       "client_id": "YOUR_CLIENT_ID_HERE.apps.googleusercontent.com",
+       "scopes": [
+         "https://www.googleapis.com/auth/gmail.send",
+         "https://www.googleapis.com/auth/spreadsheets"
+       ]
+     }
+   }
 ```
 
-#### 3. Prepare Your Google Sheet
+4. **Load Extension in Chrome**
+   
+   - Open Chrome and navigate to `chrome://extensions/`
+   - Enable "Developer mode" (toggle in top right)
+   - Click "Load unpacked"
+   - Select the OutreachPro directory
 
-Create a Google Sheet with these columns:
+5. **Get Gemini API Key** (Optional, for AI features)
+   
+   - Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+   - Create a new API key
+   - The extension will prompt for this when you use AI refinement
 
-| First Name | Email | Company | Role | Status |
-|------------|-------|---------|------|--------|
-| Jane | jane@example.com | TechStart | Founder | |
-| John | john@example.com | DevCo | CEO | |
+## Usage
 
-**Important:** Leave the Status column empty - it will be updated automatically.
+### Preparing Your Google Sheet
 
-#### 4. Load the Extension
+Create a Google Sheet with the following columns:
 
-1. Open Chrome and go to `chrome://extensions/`
-2. Enable "Developer mode" (top right)
-3. Click "Load unpacked"
-4. Select the `outreachpro-extension` folder
-5. Pin the extension to your toolbar
+| First Name | Email | Company | Role | Status | Sent At |
+|------------|-------|---------|------|--------|---------|
+| Jane | jane@example.com | TechStart | Founder | | |
+| John | john@devco.com | DevCo | CEO | | |
 
-#### 5. Get Gemini API Key (Optional)
+**Required columns**: First Name, Email  
+**Optional columns**: Company, Role  
+**Auto-filled**: Status, Sent At
 
-1. Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. Create an API key
-3. The extension will prompt you when you first use AI refinement
+### Sending Emails
 
-## 📖 How to Use
-
-### Step 1: Write Your Template
-
-1. Click the extension icon
-2. Fill in the subject line
-3. Write your email body
-4. Use variable buttons to insert personalization:
-   - `{First Name}`
-   - `{Company}`
-   - `{Role}`
-
-Example:
+1. Click the OutreachPro icon in your Chrome toolbar
+2. Write your email template using variables:
 ```
-Subject: Partnership Opportunity: Student Founders
-
-Body:
-Hi {First Name},
-
-I recently came across {Company} and was impressed by your work in the student startup ecosystem.
-
-As a fellow builder, I wanted to reach out and see if you'd be open to a quick chat about how we could support your growth?
-
-Best,
-Alex
+   Subject: Quick question for {First Name}
+   
+   Hi {First Name},
+   
+   I noticed your work at {Company} and wanted to reach out...
 ```
 
-### Step 2: Refine with AI (Optional)
+3. Use the variable buttons to insert `{First Name}`, `{Company}`, or `{Role}`
+4. Click the AI button to refine your template (optional)
+5. Preview how the email looks with the sample recipient
+6. Click "Send Outreach"
+7. Paste your Google Sheets URL when prompted
+8. Confirm to start sending
 
-1. Click the ✨ AI button
-2. Enter your Gemini API key when prompted
-3. Review the refined template
-4. Make any manual adjustments
+### Template Variables
 
-### Step 3: Send Emails
+Available variables that get replaced with recipient data:
 
-1. Click "Send Outreach"
-2. Paste your Google Sheets URL when prompted
-3. Review the confirmation dialog
-4. Confirm to start sending
+- `{First Name}` - Recipient's first name
+- `{Email}` - Recipient's email address
+- `{Company}` - Company name
+- `{Role}` - Job title or role
 
-The extension will:
-- ✅ Read recipients from your sheet
-- ✅ Personalize each email
-- ✅ Send emails one-by-one (3-second delay)
-- ✅ Update the Status column in your sheet
-- ✅ Show progress in real-time
+### AI Template Refinement
 
-## ⚙️ Configuration
+The AI assistant helps improve your email copy:
 
-### Rate Limits
+1. Write your initial template
+2. Click the brain icon in the body section
+3. Enter your Gemini API key (first time only)
+4. Wait for the AI to refine your message
+5. Review and edit the suggested improvements
 
-The extension respects Gmail API limits:
-- **500 emails per day** maximum
-- **3-second delay** between emails
-- Progress tracked in Chrome storage
+The AI preserves your template variables while enhancing:
+- Subject line clarity and engagement
+- Email body professionalism
+- Call-to-action effectiveness
+- Overall response probability
 
-### Storage
-
-The extension stores:
-- Last used email template
-- Google Sheets URL
-- Gemini API key
-- Daily send count
-
-To reset: Go to `chrome://extensions/` → OutreachPro → "Clear storage"
-
-## 🔒 Security & Privacy
-
-- ✅ All API calls go directly from your browser
-- ✅ No data is sent to external servers
-- ✅ OAuth tokens are managed by Chrome
-- ✅ API keys stored locally in Chrome storage
-- ✅ No automatic sending without confirmation
-
-## 🐛 Troubleshooting
-
-### "Failed to send email"
-
-**Solution:** Check that:
-1. Gmail API is enabled in Google Cloud
-2. OAuth consent screen is configured
-3. Your account has sending permissions
-
-### "Invalid Google Sheets URL"
-
-**Solution:** URL must be in format:
+## Project Structure
 ```
-https://docs.google.com/spreadsheets/d/SPREADSHEET_ID/edit
-```
-
-### "Daily send limit reached"
-
-**Solution:** Gmail limits apply. Wait 24 hours or use a different account.
-
-### AI Refinement Not Working
-
-**Solution:**
-1. Verify Gemini API key is valid
-2. Check API quota in Google Cloud Console
-3. Try regenerating the API key
-
-## 📁 File Structure
-
-```
-outreachpro-extension/
-├── manifest.json              # Extension configuration
+outreachpro/
+├── manifest.json           # Extension configuration
 ├── popup/
-│   ├── popup.html            # UI (already provided)
-│   └── popup.js              # UI logic & event handlers
+│   ├── popup.html         # Main interface
+│   ├── popup.css          # Styling
+│   └── popup.js           # UI logic
 ├── background/
-│   └── service_worker.js     # Background processes & API calls
+│   └── service_worker.js  # Background processes
 ├── lib/
-│   ├── gmail.js              # Gmail API functions
-│   ├── sheets.js             # Google Sheets API functions
-│   ├── gemini.js             # Gemini AI integration
-│   ├── auth.js               # OAuth authentication
-│   └── rateLimiter.js        # Rate limiting logic
+│   ├── auth.js           # OAuth authentication
+│   ├── gmail.js          # Gmail API integration
+│   ├── sheets.js         # Google Sheets API
+│   ├── gemini.js         # AI template refinement
+│   └── rateLimiter.js    # Send rate management
 ├── utils/
-│   ├── constants.js          # Configuration constants
-│   └── validators.js         # Validation & personalization
-└── icons/                    # Extension icons (create 16x16, 48x48, 128x128)
+│   ├── constants.js      # Configuration constants
+│   └── validators.js     # Input validation
+└── icons/
+    ├── icon16.png
+    ├── icon48.png
+    └── icon128.png
 ```
 
-## 🎯 Best Practices
+## API Integration
 
-1. **Test First:** Send to yourself before sending to real recipients
-2. **Small Batches:** Start with 10-20 recipients to test
-3. **Personalize:** Use all available variables for better results
-4. **Review AI Output:** Always review AI-refined templates
-5. **Monitor Status:** Check the Google Sheet for send status
+### Gmail API
+- **Endpoint**: `gmail.googleapis.com/gmail/v1/users/me/messages/send`
+- **Scope**: `https://www.googleapis.com/auth/gmail.send`
+- **Rate Limit**: 500 emails/day
 
-## 📊 Sheet Status Values
+### Google Sheets API
+- **Endpoint**: `sheets.googleapis.com/v4/spreadsheets/{id}/values/{range}`
+- **Scope**: `https://www.googleapis.com/auth/spreadsheets`
+- **Operations**: Read recipient data, write status updates
 
-The extension updates the Status column with:
-- `Sent [timestamp]` - Email sent successfully
-- `Failed: [error]` - Email failed to send
+### Gemini API
+- **Endpoint**: `generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`
+- **Model**: gemini-2.5-flash
+- **Purpose**: Email template optimization
 
-## 🔄 Updates & Maintenance
+## Troubleshooting
 
-To update the extension:
-1. Make changes to the code
-2. Go to `chrome://extensions/`
-3. Click the refresh icon on OutreachPro
-4. Test the changes
+### Authentication Issues
 
-## ⚠️ Important Notes
+**Error: "access_denied - OutreachPro has not completed the Google verification process"**
 
-- This is NOT a spam tool - use responsibly
-- Always get consent before sending emails
-- Respect unsubscribe requests
-- Follow email best practices
-- Stay within Gmail's sending limits
+Solution: Add your email as a test user in Google Cloud Console
+1. Go to OAuth consent screen
+2. Scroll to "Test users"
+3. Add your email address
+4. Reload the extension
 
-## 🚧 Known Limitations
+### Email Sending Failures
 
-- Sequential sending only (no parallel)
-- Basic error handling
-- No email scheduling
-- No A/B testing
-- No analytics dashboard
+**Error: "Daily send limit reached"**
 
-## 🎓 For Hackathon Judges
+The extension respects Gmail's 500 email/day limit. Wait until midnight for the counter to reset.
 
-This is a functional MVP built for a hackathon. Focus areas:
-- ✅ Core functionality works end-to-end
-- ✅ Clean separation of concerns
-- ✅ Respects API rate limits
-- ✅ Secure OAuth implementation
-- ✅ Real-time progress updates
+**Error: "Failed to read sheet"**
 
-Future improvements:
-- Better error handling
-- Email scheduling
-- Template library
-- Analytics dashboard
-- A/B testing
+Verify your sheet permissions and URL format:
+- Sheet must be accessible by your Google account
+- URL format: `https://docs.google.com/spreadsheets/d/[SHEET_ID]/edit`
 
-## 📄 License
+### Extension Errors
 
-MIT License - Feel free to use and modify for your hackathon project!
+Check the Chrome extension console:
+1. Visit `chrome://extensions/`
+2. Find OutreachPro
+3. Click "Errors" to view logs
+4. Click "Inspect views: service worker" for background logs
+
+## Best Practices
+
+### Email Deliverability
+- Start with small batches (10-20 emails) to establish sender reputation
+- Warm up your account by gradually increasing daily volume
+- Personalize each email beyond just the name
+- Include a clear unsubscribe option
+
+### Template Writing
+- Keep subject lines under 50 characters
+- Focus on the recipient's needs, not your product
+- Include a specific, low-friction call-to-action
+- Maintain a professional but conversational tone
+
+### Sheet Management
+- Keep a backup copy before running campaigns
+- Use the Status column to track sends
+- Filter out previously contacted recipients
+- Regularly clean and update your contact list
+
+## Privacy & Security
+
+- Your OAuth token is stored locally in Chrome's secure storage
+- Emails are sent directly through your Gmail account
+- No email content is stored by the extension
+- Gemini API key is stored locally (not transmitted elsewhere)
+- The extension only requests minimum necessary permissions
+
+## Limitations
+
+- Maximum 500 emails per day (Gmail API restriction)
+- 3-second delay between sends (anti-spam protection)
+- Requires active Chrome session while sending
+- Cannot send attachments
+- Plain text emails only (no HTML formatting)
+
+## Contributing
+
+Contributions are welcome. Please follow these guidelines:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/improvement`)
+3. Make your changes with clear commit messages
+4. Test thoroughly with real APIs
+5. Submit a pull request with a description of changes
+
+## Support
+
+For issues, questions, or feature requests:
+- Open an issue on GitHub
+- Include Chrome version, error messages, and steps to reproduce
+- Check existing issues before creating new ones
+
+## License
+
+MIT License - See LICENSE file for details
+
+## Acknowledgments
+
+- Built with Chrome Extension Manifest V3
+- Uses Google's Gmail, Sheets, and Gemini APIs
+- Inspired by modern cold email outreach tools
 
 ---
 
-Built with ❤️ for efficient, personalized outreach
+**Note**: This extension is for legitimate outreach only. Respect anti-spam laws and always provide recipients with a way to unsubscribe.

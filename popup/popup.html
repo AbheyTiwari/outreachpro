@@ -11,18 +11,7 @@
 <!-- Header -->
 <header class="header">
 <div class="header-left">
-<div class="logo-icon">
-<span class="icon">✉️</span>
-</div>
 <h1 class="title">OutreachPro</h1>
-</div>
-<!-- Google Sync Indicator -->
-<div id="syncIndicator" class="sync-indicator">
-<span class="sync-dot-wrapper">
-<span class="sync-dot-ping"></span>
-<span class="sync-dot"></span>
-</span>
-<span class="sync-text">SYNC</span>
 </div>
 </header>
 
@@ -68,7 +57,7 @@ Best,
 Alex</textarea>
 <!-- AI Button -->
 <button id="aiButton" class="ai-button" title="AI Refine">
-<span class="ai-icon">✨</span>
+<span class="ai-icon">🧠</span>
 </button>
 </div>
 </div>
@@ -77,25 +66,28 @@ Alex</textarea>
 <div class="preview-section">
 <div class="preview-header">
 <h3 class="preview-title">LIVE PREVIEW</h3>
-<span class="preview-recipient">Recipient: Jane Doe</span>
+<span class="preview-recipient" id="previewRecipient">Recipient: Jane Doe</span>
 </div>
-<div class="preview-card">
+<div class="preview-card" id="previewCard">
 <div class="preview-avatar-section">
 <div class="preview-avatar">
-<span class="avatar-text">JD</span>
+<span class="avatar-text" id="previewInitials">JD</span>
 </div>
 <div class="preview-info">
-<span class="preview-name">Jane Doe</span>
-<span class="preview-company">Founder @ TechStart</span>
+<span class="preview-name" id="previewName">Jane Doe</span>
+<span class="preview-company" id="previewCompany">Founder @ TechStart</span>
 </div>
 </div>
-<div class="preview-content">
-<div class="preview-line preview-line-short"></div>
-<div class="preview-line preview-line-full"></div>
-<div class="preview-line preview-line-medium"></div>
-</div>
-<div class="preview-footer">
-Email content rendered with variables
+<div class="preview-content" id="previewContent">
+<div class="preview-subject" id="previewSubject">Partnership Opportunity: Student Founders</div>
+<div class="preview-body" id="previewBody">Hi Jane,
+
+I recently came across TechStart and was impressed by your work in the student startup ecosystem.
+
+As a fellow builder, I wanted to reach out and see if you'd be open to a quick chat about how we could support your growth?
+
+Best,
+Alex</div>
 </div>
 </div>
 </div>
@@ -103,14 +95,11 @@ Email content rendered with variables
 
 <!-- Footer -->
 <footer class="footer">
-<button id="settingsButton" class="settings-btn" title="Settings">
-<span class="icon">⚙️</span>
-</button>
 <div class="footer-right">
 <span id="statusText" class="status-text">Ready to send</span>
 <button id="sendButton" class="send-btn">
 <span>Send Outreach</span>
-<span class="icon">📨</span>
+<span class="icon">✋</span>
 </button>
 </div>
 </footer>

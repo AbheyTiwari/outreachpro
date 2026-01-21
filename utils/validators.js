@@ -13,7 +13,7 @@ export function hasRequiredVariables(template, variables) {
 export function validateRecipient(recipient) {
   const errors = [];
   
-  if (!recipient.email || !isValidEmail(recipient.email)) {
+  if (!recipient.Email || !isValidEmail(recipient.Email)) {
     errors.push('Invalid email address');
   }
   
